@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  
+</head>
+<body class="app-body">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo" title="Nhấn để ẩn/hiện menu">
+        <span class="logo-circle">A</span>
+        <span class="logo-text"> App</span>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarMenu">
+        <button class="nav-item active" data-section="overview">
+          Dashboard
+        </button>
+        <button class="nav-item" data-section="activities">
+          Hoạt động 
+        </button>
+        <button class="nav-item" data-section="history">
+          Lịch sử hoạt động
+        </button>
+      </nav>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle">
+            Xin chào, chờ Admin cập nhật hoạt động mới nhé!
+          </p>
+        </div>
+        <div class="user-info">
+          <div class="user-text">
+            <span class="user-name">user</span>
+            <span class="user-role">Thành viên gia đình</span>
+          </div>
+          <div class="user-avatar">U</div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section id="section-overview" class="section active">
+          <h2 class="section-title">Tổng quan</h2>
+          <div class="cards-grid">
+            <div class="card">
+              <p class="card-label">Hoạt động hôm nay</p>
+              <p class="card-value">0</p>
+            </div>
+            <div class="card">
+              <p class="card-label">Hoạt động tuần này</p>
+              <p class="card-value">0</p>
+            </div>
+            <div class="card">
+              <p class="card-label">Đã tham gia</p>
+              <p class="card-value">0</p>
+            </div>
+            
+          </div>
+          <h3 class="subsection-title">Hoạt động sắp diễn ra</h3>
+          <div class="card">
+            <p style="color: #666; font-style: italic;">
+              Hiện chưa có hoạt động nào sắp diễn ra.
+            </p>
+          </div>
+        </section>
+
+        <section id="section-activities" class="section">
+          <h2 class="section-title">Hoạt động tổ dân phố</h2>
+          <div class="filters-row">
+            <input type="text" class="input" placeholder="Tìm theo tên hoạt động..." />
+            <select class="input">
+              <option>Thời gian: Tất cả</option>
+              <option>Hôm nay</option>
+              <option>Tuần này</option>
+              <option>Tháng này</option>
+            </select>
+            <select class="input">
+              <option>Trạng thái: Tất cả</option>
+              <option>Chưa đăng ký</option>
+              <option>Đã đăng ký</option>
+              <option>Đã kết thúc</option>
+            </select>
+          </div>
+          <div class="card table-wrapper">
+            <table class="table" id="activities-table">
+              <thead>
+                <tr>
+                  <th>Tên hoạt động</th>
+                  <th>Thời gian</th>
+                  <th>Địa điểm</th>
+                  <th>Số người</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="6" style="text-align: center; padding: 20px; color: #888;">
+                    Chưa có hoạt động nào được Admin cập nhật.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="section-history" class="section">
+          <h2 class="section-title">Lịch sử hoạt động</h2>
+          <div class="filters-row">
+            <select class="input">
+              <option>Thời gian: Tháng này</option>
+              <option>3 tháng gần đây</option>
+              <option>Toàn bộ</option>
+            </select>
+            <select class="input">
+              <option>Trạng thái: Tất cả</option>
+              <option>Đã tham gia</option>
+              <option>Đã huỷ</option>
+            </select>
+          </div>
+          <div class="card table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Tên hoạt động</th>
+                  <th>Thời gian</th>
+                  <th>Kết quả</th>
+                  <th>Ghi chú</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" style="text-align: center; padding: 20px; color: #888;">
+                    Bạn chưa tham gia hoạt động nào.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-backdrop" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <h3 class="modal-title" id="modalTitle">Đăng ký hoạt động</h3>
+      <p class="modal-text">
+        Bạn có chắc chắn muốn đăng ký tham gia hoạt động này không?
+      </p>
+      <div class="modal-actions">
+        <button class="btn-outline" onclick="closeModal()">Huỷ</button>
+        <button class="btn-primary" onclick="confirmRegister()">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    const logoBtn = document.querySelector('.sidebar-logo');
+    const sidebarNav = document.getElementById('sidebarMenu');
+
+    logoBtn.addEventListener('click', () => {
+      
+      sidebarNav.classList.toggle('hidden');
+    });
+    
+    const navItems = document.querySelectorAll(".nav-item");
+    const sections = document.querySelectorAll(".section");
+
+    navItems.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        navItems.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const sectionName = btn.dataset.section;
+        sections.forEach((sec) => sec.classList.remove("active"));
+        document
+          .getElementById("section-" + sectionName)
+          .classList.add("active");
+      });
+    });
+
+    
+    let currentActivity = null;
+    function openModal(activityName) {
+      currentActivity = activityName;
+      document.getElementById("modalTitle").textContent = "Đăng ký: " + activityName;
+      document.getElementById("modal").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("modal").classList.add("hidden");
+      currentActivity = null;
+    }
+
+    function confirmRegister() {
+      alert("Đã đăng ký hoạt động: " + currentActivity);
+      closeModal();
+    }
+  </script>
+</body>
+</html>
